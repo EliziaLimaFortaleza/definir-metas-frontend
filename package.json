@@ -1,0 +1,53 @@
+{
+  "name": "definir-metas-frontend",
+  "version": "1.0.0",
+  "description": "Frontend do Sistema de Estudos Pessoal",
+  "private": true,
+  "dependencies": {
+    "@types/node": "^20.8.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.16.0",
+    "react-scripts": "5.0.1",
+    "typescript": "^5.2.0",
+    "axios": "^1.5.0",
+    "react-hook-form": "^7.46.0",
+    "react-hot-toast": "^2.4.1",
+    "lucide-react": "^0.263.1",
+    "recharts": "^2.8.0",
+    "date-fns": "^2.30.0",
+    "react-datepicker": "^4.21.0",
+    "@types/react-datepicker": "^4.19.4",
+    "react-dropzone": "^14.2.3",
+    "@types/react-dropzone": "^5.1.0",
+    "clsx": "^2.0.0",
+    "tailwind-merge": "^1.14.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "proxy": "http://localhost:5000"
+} 
