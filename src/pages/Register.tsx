@@ -2,6 +2,7 @@ import React from 'react';
 import { useForm } from 'react-hook-form';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
+import api from '../services/api';
 
 interface RegisterForm {
   nome: string;
@@ -17,6 +18,21 @@ const Register: React.FC = () => {
   const onSubmit = async (data: RegisterForm) => {
     try {
       await registerUser(data.nome, data.email, data.senha);
+      
+      // Verificar se há um convite pendente
+      const pendingToken = localStorage.getItem('pendingInviteToken');
+      if (pendingToken) {
+        try {
+          await api.post(`/parceiros/aceitar-apos-registro/${pendingToken}`);
+          localStorage.removeItem('pendingInviteToken');
+          navigate('/parceiros');
+          return;
+        } catch (err: any) {
+          console.error('Erro ao aceitar convite após registro:', err);
+          // Se falhar, continua para o dashboard
+        }
+      }
+      
       navigate('/dashboard');
     } catch {
       // O erro já é tratado no AuthContext

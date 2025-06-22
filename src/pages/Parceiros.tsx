@@ -40,7 +40,12 @@ const Parceiros: React.FC = () => {
     setSuccess('');
     try {
       const response = await api.post('/parceiros/convidar', { email });
-      setSuccess(response.data.message);
+      if (response.data.inviteUrl) {
+        // Email não foi enviado, mostrar link para compartilhamento manual
+        setSuccess(`${response.data.message} ${response.data.inviteUrl}`);
+      } else {
+        setSuccess(response.data.message);
+      }
       setEmail('');
       setShowModal(false);
       fetchParceiros(); // Refresh list
