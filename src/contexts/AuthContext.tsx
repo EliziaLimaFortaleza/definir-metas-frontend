@@ -1,10 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import axios from 'axios';
+import api from '../services/api';
 import toast from 'react-hot-toast';
-
-// Configurar base URL do axios
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000';
-axios.defaults.baseURL = API_BASE_URL;
 
 interface User {
   id: number;
@@ -40,30 +36,20 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // Configurar axios para incluir token em todas as requisições
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    }
-  }, []);
-
   // Verificar se o usuário está autenticado ao carregar a aplicação
   useEffect(() => {
     const checkAuth = async () => {
       const token = localStorage.getItem('token');
       if (token) {
         try {
-          const response = await axios.get('/api/auth/verificar');
+          const response = await api.get('/auth/verificar');
           if (response.data.valid) {
             setUser(response.data.usuario);
           } else {
             localStorage.removeItem('token');
-            delete axios.defaults.headers.common['Authorization'];
           }
         } catch (error) {
           localStorage.removeItem('token');
-          delete axios.defaults.headers.common['Authorization'];
         }
       }
       setLoading(false);
@@ -74,11 +60,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const login = async (email: string, senha: string) => {
     try {
-      const response = await axios.post('/api/auth/login', { email, senha });
+      const response = await api.post('/auth/login', { email, senha });
       const { token, usuario } = response.data;
       
       localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(usuario);
       
       toast.success('Login realizado com sucesso!');
@@ -91,11 +76,10 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const register = async (nome: string, email: string, senha: string) => {
     try {
-      const response = await axios.post('/api/auth/registro', { nome, email, senha });
+      const response = await api.post('/auth/registro', { nome, email, senha });
       const { token, usuario } = response.data;
       
       localStorage.setItem('token', token);
-      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
       setUser(usuario);
       
       toast.success('Conta criada com sucesso!');
@@ -108,7 +92,6 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('token');
-    delete axios.defaults.headers.common['Authorization'];
     setUser(null);
     toast.success('Logout realizado com sucesso!');
   };

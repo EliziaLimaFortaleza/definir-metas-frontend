@@ -18,7 +18,9 @@ const Register: React.FC = () => {
     try {
       await registerUser(data.nome, data.email, data.senha);
       navigate('/dashboard');
-    } catch {}
+    } catch {
+      // O erro já é tratado no AuthContext
+    }
   };
 
   return (
