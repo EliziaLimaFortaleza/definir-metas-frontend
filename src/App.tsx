@@ -13,6 +13,7 @@ import Questoes from './pages/Questoes';
 import Parceiros from './pages/Parceiros';
 import Progresso from './pages/Progresso';
 import Layout from './components/Layout';
+import AceitarConvite from './pages/AceitarConvite';
 
 // Componente para rotas protegidas
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -101,6 +102,7 @@ const App: React.FC = () => {
               <Route path="estudos" element={<Estudos />} />
               <Route path="questoes" element={<Questoes />} />
               <Route path="parceiros" element={<Parceiros />} />
+              <Route path="parceiros/aceitar/:token" element={<AceitarConvite />} />
               <Route path="progresso" element={<Progresso />} />
             </Route>
             
